@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calculator, Umbrella, Gift, FileText, ChevronRight, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
 
 const Calculators: React.FC = () => {
   const [activeCalc, setActiveCalc] = useState<'ferias' | '13o' | 'rescisao' | 'vt' | null>(null);
@@ -9,6 +10,7 @@ const Calculators: React.FC = () => {
   const [daysWorked, setDaysWorked] = useState('30');
   const [avisoPrevio, setAvisoPrevio] = useState<'trabalhado' | 'indenizado'>('indenizado');
   const [result, setResult] = useState<any>(null);
+  const simulatorRef = useRef<HTMLDivElement>(null);
 
   const calculateFerias = () => {
     const s = parseFloat(salary);
@@ -82,6 +84,10 @@ const Calculators: React.FC = () => {
             onClick={() => {
               setActiveCalc(calc.id as any);
               setResult(null);
+              // Scroll to simulator with small delay for AnimatePresence
+              setTimeout(() => {
+                simulatorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
             }}
             className={`glass-card p-8 flex flex-col items-center gap-4 border-2 transition-all ${
               activeCalc === calc.id ? 'border-primary bg-primary/5' : 'border-white/5 hover:border-white/10'
@@ -96,6 +102,7 @@ const Calculators: React.FC = () => {
       <AnimatePresence mode="wait">
         {activeCalc && (
           <motion.div
+            ref={simulatorRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -261,7 +268,7 @@ const Calculators: React.FC = () => {
         <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-xs text-[var(--text-main)] opacity-30 italic">Dados baseados na última convenção coletiva disponível no site oficial.</p>
           <button 
-            onClick={() => window.open('https://www.sindpetshop.org.br/Home/CCT', '_blank')}
+            onClick={() => window.open('https://sindpetshop.org.br/CCT', '_blank')}
             className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-[10px] hover:underline"
           >
             Solicitar CCT em PDF <ChevronRight className="w-4 h-4" />

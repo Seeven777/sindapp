@@ -21,6 +21,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
   const { profile } = useAuth();
   const [announcements, setAnnouncements] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission>(Notification.permission);
 
   const isActiveMember = profile?.status === 'active';
 
@@ -66,7 +67,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
   const handleNotificationRequest = async () => {
     const token = await requestNotificationPermission(profile?.uid);
     if (token) {
-      // In a real app, this would be updated in Firestore automatically
+      setNotifPermission('granted');
       console.log('Notificações ativadas com sucesso!');
     }
   };
@@ -99,7 +100,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
               Bem-vindo ao <span className="text-[var(--text-main)] font-bold tracking-tight">Sindapp</span>. Sua central digital de benefícios e direitos trabalhistas.
             </p>
             
-            {Notification.permission !== 'granted' && (
+            {notifPermission !== 'granted' ? (
               <motion.button
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -109,6 +110,11 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
                 <Bell className="w-4 h-4" />
                 Ativar Notificações
               </motion.button>
+            ) : (
+              <div className="mt-6 flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 px-6 py-3 rounded-2xl text-[10px] font-black text-emerald-500 uppercase tracking-widest w-fit">
+                <Bell className="w-4 h-4" />
+                Notificações Ativas
+              </div>
             )}
           </motion.div>
 
@@ -206,6 +212,9 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
                     alt={item.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://www.sindpetshop.org.br/Assets/img/logo-sindpetshop.png';
+                    }}
                   />
                 </div>
               )}

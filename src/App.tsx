@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './components/AuthProvider';
+import MobileMenu from './components/MobileMenu';
 import { ThemeProvider } from './components/ThemeProvider';
 import Layout from './components/Layout';
 import Login from './components/Login';
@@ -20,6 +21,7 @@ import { Loader2 } from 'lucide-react';
 const AppContent: React.FC = () => {
   const { user, profile, loading, isAuthReady } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   if (!isAuthReady || loading) {
     return (
@@ -84,8 +86,23 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+    <Layout 
+      activeTab={activeTab} 
+      setActiveTab={(tab) => {
+        if (tab === 'menu') {
+          setIsMobileMenuOpen(true);
+        } else {
+          setActiveTab(tab);
+        }
+      }}
+    >
       {renderContent()}
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
     </Layout>
   );
 };

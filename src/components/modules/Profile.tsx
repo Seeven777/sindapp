@@ -25,7 +25,7 @@ const Profile: React.FC = () => {
       await uploadBytes(storageRef, file);
       const photoUrl = await getDownloadURL(storageRef);
       
-      await updateDoc(doc(db, 'profiles', profile.uid), {
+      await updateDoc(doc(db, 'users', profile.uid), {
         photoUrl,
         updatedAt: new Date().toISOString()
       });

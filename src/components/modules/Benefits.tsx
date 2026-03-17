@@ -65,6 +65,30 @@ const Benefits: React.FC = () => {
       category: 'Educação',
       icon: 'GraduationCap',
       url: 'https://eseg.edu.br/'
+    },
+    {
+      id: 'b6',
+      title: 'Saúde - Convênio Médico NotreDame',
+      description: 'Planos de saúde com valores diferenciados para associados do Sindicato.',
+      category: 'Saúde',
+      icon: 'Heart',
+      url: 'https://www.gndi.com.br/'
+    },
+    {
+      id: 'b7',
+      title: 'Lazer - Wet\'n Wild',
+      description: 'Diversão garantida no parque aquático com descontos em ingressos antecipados.',
+      category: 'Lazer',
+      icon: 'Waves',
+      url: 'https://www.wetnwild.com.br/'
+    },
+    {
+      id: 'b8',
+      title: 'Seguros - Porto Seguro',
+      description: 'Descontos em seguro auto, residencial e de vida para sua tranquilidade.',
+      category: 'Seguros',
+      icon: 'Shield',
+      url: 'https://www.portoseguro.com.br/'
     }
   ];
 

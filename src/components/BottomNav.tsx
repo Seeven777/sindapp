@@ -17,9 +17,9 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { id: 'dashboard', label: 'Início', icon: LayoutDashboard },
     { id: 'benefits', label: 'Clube', icon: Gift },
-    { id: 'social-hub', label: 'Social', icon: Share2 },
     { id: 'news', label: 'Notícias', icon: Newspaper },
     { id: 'membership', label: 'Cartão', icon: CreditCard },
+    { id: 'menu', label: 'Menu', icon: Share2 },
   ];
 
   return (
